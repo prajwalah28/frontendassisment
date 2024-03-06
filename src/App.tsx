@@ -1,16 +1,13 @@
-import Navbar from "./components/Navbar";
-import CoinPage from "./pages/CoinPage";
-import './index.css'; // Import Tailwind CSS
-
+import Navbar from "./components/Navbar"
+import CoinPage from "./pages/CoinPage"
 
 function App() {
   return (
-    <div className="m-0 p-0"> {/* Apply margin: 0 and padding: 0 */}
+    <div>
        <Navbar/>
        <CoinPage/>
-       
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

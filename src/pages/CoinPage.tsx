@@ -1,15 +1,9 @@
-import About from "../components/About";
 import CradsPromo from "../components/CradsPromo";
 import Crypto from "../components/Crypto";
-import Footer from "../components/Footer";
 import PageHolder from "../components/PageHolder";
 import PerformanceSection from "../components/PerformanceSection";
-import Sentiment from "../components/Sentiment";
-import Team from "../components/Team";
 import ToggleSection from "../components/ToggleSection";
-import Tokenomics from "../components/Tokenomics";
 import TrendingCoins from "../components/TrendingCoins";
-import Trendings from "../components/Trendings";
 
 function CoinPage() {
   return (
@@ -27,12 +21,6 @@ function CoinPage() {
           <TrendingCoins />
         </div>
       </div>
-      <Sentiment/>
-      <About/>
-      <Tokenomics/>
-       <Team/>
-      <Footer/>
-      <Trendings/>
     </div>
   );
 }

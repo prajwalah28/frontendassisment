@@ -1,70 +1,10 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { IoMdInformationCircle } from "react-icons/io";
 
-const PerformanceSection = ({ url }) => {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(url);
-        setResponse(result.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-
-    return () => {}; // Clean-up function
-  }, [url]);
-
-  return { response, error, loading };
-};
-
-const Table = () => {
-  const { response, error, loading } = PerformanceSection({
-    url: `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
-  });
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-
-  const bitcoinData = response && response.length > 0 ? response[0] : null;
-
-  if (!bitcoinData) {
-    return <p>No data available for Bitcoin</p>;
-  }
-
-  const attributesGroup1 = {
-    "Bitcoin Price": bitcoinData.current_price,
-    "24h Low/24h High": `${bitcoinData.low_24h}/${bitcoinData.high_24h}`,
-    "7d Low/7d High": `${bitcoinData.ath}/${bitcoinData.atl}`,
-    "Trading Volume": bitcoinData.total_volume,
-    "Market Cap Rank": bitcoinData.market_cap_rank
-  };
-
-  const attributesGroup2 = {
-    "Market Cap": bitcoinData.market_cap,
-    "Market Cap Dominance": bitcoinData.market_cap_change_percentage_24h,
-    "Volume/Market Cap": bitcoinData.total_volume / bitcoinData.market_cap,
-    "All-Time High": bitcoinData.ath,
-    "All-Time Low": bitcoinData.atl,
-  };
-
+function PerformanceSection() {
   return (
-
-    <div className="Markets-container bg-gray-100 py-8">
-      <div className="text-2xl font-semibold text-[#0F1629]">Performance</div>
+    <div className="bg-white mt-4 rounded-lg p-6 h-max">
+      <div>
+        <div className="text-2xl font-semibold text-[#0F1629]">Performance</div>
         <div className="py-4 mt-2">
           <div className="flex justify-between ">
             <div className="text-start">
@@ -121,37 +61,115 @@ const Table = () => {
           </div>
         </div>
 
-      <h2 className="text-2xl font-bold text-center mb-4">Markets</h2>
-      <div className="Markets-wrapper-container max-w-screen-lg mx-auto">
-        <div style={{ display: 'flex' }}>
-          <div>
-            <table className="w-full mb-8">
-              <tbody>
-                {Object.entries(attributesGroup1).map(([key, value]) => (
-                  <tr key={key} className="border-b">
-                    <td className="py-2 px-4 font-semibold">{key}</td>
-                    <td className="py-2 px-4">{value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="mt-8">
+          <div className="flex items-center">
+            <div className="text-[#44475B] font-semibold text-xl">
+              Fundamentals
+            </div>
+            <div className="">
+              <IoMdInformationCircle className="text-[#ABB9BF] text-lg ml-2" />
+            </div>
           </div>
-          <div>
-            <table className="w-full">
-              <tbody>
-                {Object.entries(attributesGroup2).map(([key, value]) => (
-                  <tr key={key} className="border-b">
-                    <td className="py-2 px-4 font-semibold">{key}</td>
-                    <td className="py-2 px-4">{value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex mb-8">
+            <div className="w-1/2 mr-10 mt-3  ">
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  Bitcoin Price
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  $16,815.46
+                </div>
+              </div>
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  24h Low / 24h High{" "}
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  $16,382.07 / $16,874.12
+                </div>
+              </div>
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  7d Low / 7d High
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  $16,382.07 / $16,874.12
+                </div>
+              </div>
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  Trading Volume
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  $23,249,202,782
+                </div>
+              </div>
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  Market Cap Rank
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  #1
+                </div>
+              </div>
+            </div>
+            <div className="w-1/2 ml-10 mt-3">
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  Market Cap
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  $323,507,290,047
+                </div>
+              </div>
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  Market Cap Dominance
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  38.343%
+                </div>
+              </div>
+              <div className="flex justify-between py-5 border-b-2 border-[#D3E0E6]">
+                <div className="text-[#768396] text-sm font-semibold">
+                  Volume / Market Cap
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4">
+                  0.0718
+                </div>
+              </div>
+              <div className="flex justify-between py-3 border-b-2 border-[#D3E0E6] items-center">
+                <div className="text-[#768396] text-sm font-semibold ">
+                  All-Time High
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4 -p-2">
+                  <div className="text-end">
+                    $69,044.77 <span className="text-red-500">-75.6%</span>
+                  </div>
+                  <div className="text-xs font-normal">
+                    Nov 10, 2021 (about 1 year)
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-between py-3 border-b-2 border-[#D3E0E6] items-center">
+                <div className="text-[#768396] text-sm font-semibold">
+                  All-Time Low
+                </div>
+                <div className="text-[#111827] text-sm font-semibold mr-4 -p-2">
+                  <div className="text-end">
+                    $67.81 <span className="text-green-500">-24729.1%</span>
+                  </div>
+                  <div className="text-xs font-normal">
+                    Jul 06, 2013 (over 9 years)
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default Table;
+export default PerformanceSection;
